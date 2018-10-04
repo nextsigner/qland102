@@ -164,14 +164,26 @@ Item {
         code+='                     repeat: false\n'
         code+='                     interval: 1000*'+nm+'\n'
         code+='                     onTriggered: {\n'
-        code+='                     var t=unik.getFile((fl'+m+'.folder+\'/titulo\').replace(\'file://\', \'\'))\n'
+
+        if(Qt.platform.os!=='windows'){
+            code+='                     var t=unik.getFile((fl'+m+'.folder+\'/titulo\').replace(\'file://\', \'\'))\n'
+        }else{
+            code+='                     var t=unik.getFile((fl'+m+'.folder+\'/titulo\').replace(\'file:///\', \'\'))\n'
+        }
+
         code+='                     console.log("ttt:"+t)\n'
         code+='                     lm.append(lm.addTit(t, -1, -1, false))\n'
         code+='                                 var v=0\n'
         code+='                                 //xP.ars=[]\n'
         code+='                                 for(var i=0;i<fl'+m+'.count;i++){\n'
-        code+='                                     var eg=unik.fileExist((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/url\').replace(\'file://\', \'\'))\n'
-        code+='                                     var t2=""+unik.getFile((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/titulo\').replace(\'file://\', \'\'))\n'
+        if(Qt.platform.os!=='windows'){
+            code+='                                     var eg=unik.fileExist((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/url\').replace(\'file://\', \'\'))\n'
+            code+='                                     var t2=""+unik.getFile((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/titulo\').replace(\'file://\', \'\'))\n'
+        }else{
+            code+='                                     var eg=unik.fileExist((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/url\').replace(\'file:///\', \'\'))\n'
+            code+='                                     var t2=""+unik.getFile((fl'+m+'.folder+\'/\'+fl'+m+'.get(i, \'fileName\')+\'/titulo\').replace(\'file:///\', \'\'))\n'
+        }
+
         code+='                                         xr'+m+'.parent.addTit(t2.replace(/\\n/g, \'\'),'+nm+', i, eg)\n'
         code+='                                         r.ts++\n'
         code+='                                         v++\n'
